@@ -1,68 +1,68 @@
 package projekt;
 
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Polaczenie {
 
-    private Connection polacz=null;
-    private String baza;
-    private String login;
-    private String haslo;
+    static private Connection polacz=null;
+    static private String baza = "";
+    static private String login = "";
+    static private String haslo = "";
 
-    public Connection getPolacz() {
+    static public Connection getPolacz() {
         return polacz;
     }
 
-    public void setPolacz(Connection polacz) {
-        this.polacz = polacz;
+     static public void setPolacz(Connection polacz1) {
+        polacz = polacz1;
     }
 
-    public String getBaza() {
+    static public String getBaza() {
         return baza;
     }
 
-    public void setBaza(String baza) {
-        this.baza = baza;
+    static public void setBaza(String baza1) {
+        baza = baza1;
     }
 
-    public String getLogin() {
+    static public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login){
-        this.login = login;
+    static public void setLogin(String login1){
+        login = login1;
     }
 
-    public String getHaslo() {
+    static public String getHaslo() {
         return haslo;
     }
 
-    public void setHaslo(String haslo) {
-        this.haslo = haslo;
+    static public void setHaslo(String haslo1) {
+        haslo = haslo1;
     }
 
-    public Connection polaczSie() {
+    static public void polaczSie() {
+        JFrame dialog;
         try{
             polacz = DriverManager.getConnection("" +
                     "databaseName=" + baza  + ";" +
                     "user=" + login +
                     ";password=" + haslo + ";");
-            System.out.println("Polaczono !!!");
+
+            dialog = new JFrame();
+            JOptionPane.showMessageDialog(dialog,"Polaczono z baza danych");
+
         } catch (SQLException throwables) {
-            System.out.println("Blad polaczenia");
+            dialog = new JFrame();
+            JOptionPane.showMessageDialog(dialog,"Brak polaczenia z baza danych","Blad",JOptionPane.ERROR_MESSAGE);
         }
-        return polacz;
     }
 
-    Polaczenie(){
-        polaczSie();
-    }
 
-    public static void main(String[] args){
-        Polaczenie p = new Polaczenie();
-    }
+    public static void main(String[] args){ }
 
 }
