@@ -6,17 +6,21 @@ import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Uzytkownicy extends JFrame implements MenuListener,ActionListener {
     private int id;
-    private String konto;
-    private String haslo;
+    private String konto = "";
+    private String haslo = "";
     private boolean administrator;
     private JLabel labelkonto,labelhaslo;
     private JTextField textkonto,texthaslo;
     private JButton zaloguj;
     private JMenuBar mb;
     private JMenu menu;
+    private JFrame komunikat;
 
 
 
@@ -127,9 +131,35 @@ public class Uzytkownicy extends JFrame implements MenuListener,ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object zrodlo = e.getSource();
-
-
         if(zrodlo == zaloguj) {
+            konto = textkonto.getText();
+            haslo = texthaslo.getText();
+            if(konto.length() <= 4 || konto.length() > 20 || haslo.length() <= 4 || haslo.length() > 20){
+                komunikat = new JFrame();
+                JOptionPane.showMessageDialog(komunikat,"Login lub haslo nie spelniaja kryteriow :("+"\nWskazowka : Login i haslo musi zawierac wiecej niz 4 znaki i max 20","Komunikat",JOptionPane.WARNING_MESSAGE);
+            }
+            else {
+                try {
+                    Statement stmt = Polaczenie.getPolacz().createStatement();
+                    String sql = "SELECT CASE WHEN Administrator = 0 THEN 'False' ELSE 'True' END AS Administrator FROM Uzytkownicy WHERE Konto = '" + konto + "' AND Haslo = '" + haslo + "'";
+                    ResultSet rs = stmt.executeQuery(sql);
+                    while(rs.next()) {
+                        administrator = Boolean.parseBoolean(rs.getString("Administrator"));
+                    }
+
+                    if(administrator)
+                        System.out.println("Admin");
+                    else
+                        System.out.println("Klient");
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+
+
+            }
+
+
 
         }
 
