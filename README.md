@@ -1,1 +1,2 @@
-# ProjectJavaSwing-Lodziarnia-
+# Lodziarnia(Aplikacje Bazodanowe)
+# Adam Zebrowski
