@@ -1,12 +1,10 @@
 package projekt;
 
 public class Osoby {
-    private int id;
-    private int idUzytkownicy;
-    private String imie;
-    private String nazwisko;
-    private char[] pesel = new char[11];
-    private char[] telefon = new char [11];
+    private int id,idUzytkownicy;
+    private String imie,nazwisko;
+    private char[] pesel,telefon = new char[11];
+
 
     public int getId() {
         return id;

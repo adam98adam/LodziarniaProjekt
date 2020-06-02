@@ -1,10 +1,8 @@
 package projekt;
 
 public class Zamowienia {
-    private int id;
-    private int idOsoba;
-    private String data_zamowienia;
-    private String data_dostarczenia;
+    private int id,idOsoba;
+    private String data_zamowienia,data_dostarczenia;
 
     public int getId() {
         return id;

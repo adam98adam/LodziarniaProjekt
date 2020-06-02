@@ -12,8 +12,7 @@ import java.sql.Statement;
 
 public class Uzytkownicy extends JFrame implements MenuListener,ActionListener {
     private int id;
-    private String konto = "";
-    private String haslo = "";
+    private String konto = "", haslo = "";
     private boolean administrator;
     private JLabel labelkonto,labelhaslo;
     private JTextField textkonto,texthaslo;

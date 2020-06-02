@@ -9,9 +9,7 @@ import java.sql.SQLException;
 public class Polaczenie {
 
     static private Connection polacz=null;
-    static private String baza = "";
-    static private String login = "";
-    static private String haslo = "";
+    static private String baza = "", login ="", haslo = "";
 
     static public Connection getPolacz() {
         return polacz;

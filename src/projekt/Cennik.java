@@ -2,8 +2,7 @@ package projekt;
 
 public class Cennik {
     private int id;
-    private float pojemnosc_ml;
-    private float cena;
+    private float pojemnosc_ml,cena;
 
     public int getId() {
         return id;
