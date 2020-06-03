@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class Polaczenie {
 
     static private Connection polacz=null;
-    static private String baza = "", login ="", haslo = "";
+    static private String baza = "baza", login ="sa", haslo = "Rakieta19";
 
     static public Connection getPolacz() {
         return polacz;
@@ -46,17 +46,17 @@ public class Polaczenie {
     static public void polaczSie() {
         JFrame dialog;
         try{
-            polacz = DriverManager.getConnection("" +
+            polacz = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;" +
                     "databaseName=" + baza  + ";" +
                     "user=" + login +
                     ";password=" + haslo + ";");
 
-            dialog = new JFrame();
-            JOptionPane.showMessageDialog(dialog,"Polaczono z baza danych");
+            //dialog = new JFrame();
+            //JOptionPane.showMessageDialog(dialog,"Polaczono z baza danych");
 
         } catch (SQLException throwables) {
-            dialog = new JFrame();
-            JOptionPane.showMessageDialog(dialog,"Brak polaczenia z baza danych","Blad",JOptionPane.ERROR_MESSAGE);
+            //dialog = new JFrame();
+            //JOptionPane.showMessageDialog(dialog,"Brak polaczenia z baza danych","Blad",JOptionPane.ERROR_MESSAGE);
         }
     }
 

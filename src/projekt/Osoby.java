@@ -1,59 +1,61 @@
 package projekt;
 
 public class Osoby {
-    private int id,idUzytkownicy;
-    private String imie,nazwisko;
-    private char[] pesel,telefon = new char[11];
+    static private int id,idUzytkownicy;
+    static private String imie,nazwisko;
+    static private char[] pesel,telefon = new char[11];
 
 
-    public int getId() {
+    static public int getId() {
         return id;
     }
 
-    public void setId(int id1) {
+    static public void setId(int id1) {
         id=id1;
     }
 
-    public int getIdUzytkownicy() {
+    static public int getIdUzytkownicy() {
         return idUzytkownicy;
     }
 
-    public void setIdUzytkownicy(int idUzytkownicy1) {
+    static public void setIdUzytkownicy(int idUzytkownicy1) {
         idUzytkownicy = idUzytkownicy1;
 
     }
 
-    public String getImie() {
+    static public String getImie() {
         return imie;
     }
 
-    public void setImie(String imie1) {
+    static public void setImie(String imie1) {
         imie = imie1;
     }
 
-    public String getNazwisko() {
+    static public String getNazwisko() {
         return  nazwisko;
     }
 
-    public void setNazwisko(String nazwisko1) {
+    static public void setNazwisko(String nazwisko1) {
         nazwisko = nazwisko1;
     }
 
-    public char[] getPesel() {
+    static public char[] getPesel() {
         return pesel;
     }
 
-    public void setPesel(char[] pesel1) {
+    static public void setPesel(char[] pesel1) {
         pesel = pesel1;
     }
 
-    public char[] getTelefon() {
+    static public char[] getTelefon() {
         return telefon;
     }
 
-    public void setTelefon(char[] telefon1) {
+    static public void setTelefon(char[] telefon1) {
         telefon = telefon1;
     }
+
+
 
 
 
