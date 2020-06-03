@@ -1,37 +1,37 @@
 package projekt;
 
 public class Lacznik {
-    private int id,idZamowienia,idCennik,idLody;
+    private static int id,idZamowienia,idCennik,idLody;
 
-    public int getId() {
+    public static int getId() {
         return id;
     }
 
-    public void setId(int id1) {
+    public static void setId(int id1) {
         id = id1;
     }
 
-    public int getIdZamowienia() {
+    public static int getIdZamowienia() {
         return idZamowienia;
     }
 
-    public void setIdZamowienia(int idZamowienia1) {
+    public static void setIdZamowienia(int idZamowienia1) {
         idZamowienia = idZamowienia1;
     }
 
-    public int getIdCennik() {
+    public static int getIdCennik() {
         return idCennik;
     }
 
-    public void setIdCennik(int idCennik1) {
+    public static void setIdCennik(int idCennik1) {
         idCennik = idCennik1;
     }
 
-    public int getIdLody() {
+    public static int getIdLody() {
         return idLody;
     }
 
-    public void setIdLody(int idLody1) {
+    public static void setIdLody(int idLody1) {
         idLody = idLody1;
     }
 }

@@ -1,21 +1,21 @@
 package projekt;
 
 public class DodatkiLacznik {
-    private int idLacznik,idDodatki;
+    private static  int idLacznik,idDodatki;
 
-    public int getIdLacznik() {
+    public static int getIdLacznik() {
         return idLacznik;
     }
 
-    public void setIdLacznik(int idLacznik1) {
+    public static void setIdLacznik(int idLacznik1) {
         idLacznik = idLacznik1;
     }
 
-    public int getIdDodatki() {
+    public static int getIdDodatki() {
         return idDodatki;
     }
 
-    public void setIdDodatki(int idDodatki1) {
+    public static void setIdDodatki(int idDodatki1) {
         idDodatki = idDodatki1;
     }
 

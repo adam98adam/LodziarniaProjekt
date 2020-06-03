@@ -8,42 +8,42 @@ import java.sql.SQLException;
 
 public class Polaczenie {
 
-    static private Connection polacz=null;
-    static private String baza = "", login ="", haslo = "";
+    private static  Connection polacz=null;
+    private static String baza = "", login ="", haslo = "";
 
-    static public Connection getPolacz() {
+    public static Connection getPolacz() {
         return polacz;
     }
 
-     static public void setPolacz(Connection polacz1) {
+     public static void setPolacz(Connection polacz1) {
         polacz = polacz1;
     }
 
-    static public String getBaza() {
+    public static String getBaza() {
         return baza;
     }
 
-    static public void setBaza(String baza1) {
+    public static void setBaza(String baza1) {
         baza = baza1;
     }
 
-    static public String getLogin() {
+    public static String getLogin() {
         return login;
     }
 
-    static public void setLogin(String login1){
+    public static void setLogin(String login1){
         login = login1;
     }
 
-    static public String getHaslo() {
+    public static String getHaslo() {
         return haslo;
     }
 
-    static public void setHaslo(String haslo1) {
+    public static void setHaslo(String haslo1) {
         haslo = haslo1;
     }
 
-    static public void polaczSie() {
+    public static void polaczSie() {
         JFrame dialog;
         try{
             polacz = DriverManager.getConnection("" +
@@ -59,8 +59,5 @@ public class Polaczenie {
             //JOptionPane.showMessageDialog(dialog,"Brak polaczenia z baza danych","Blad",JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
-    public static void main(String[] args){ }
 
 }

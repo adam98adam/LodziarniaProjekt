@@ -79,6 +79,8 @@ public class Logowanie extends JDialog implements MenuListener, ActionListener {
                         } else {
                             Uzytkownicy.ustawUzytkownika(stmt);
                             System.out.println("Id : " + Uzytkownicy.getId() + " Konto : " + Uzytkownicy.getKonto() + " Haslo : " + Uzytkownicy.getHaslo() + " Adminitrator : " + Uzytkownicy.getAdministrator());
+                            dispose();
+                            OknoKlient.utworzOkno();
                         }
 
                     } else {
@@ -137,12 +139,10 @@ public class Logowanie extends JDialog implements MenuListener, ActionListener {
         zaloguj.setBounds(110,180,80,20);
         zaloguj.addActionListener(this);
         add(zaloguj);
-        int szer= Toolkit.getDefaultToolkit().getScreenSize().width;
-        int wys= Toolkit.getDefaultToolkit().getScreenSize().height;
         setSize(300,300);
         int szer_okna=getSize().width;
         int wys_okna=getSize().height;
-        setLocation((szer-szer_okna)/2,(wys-wys_okna)/2);
+        setLocation((Wymiary.getSzer()-szer_okna)/2,(Wymiary.getWys()-wys_okna)/2);
         setLayout(null);
         setVisible(true);
         setResizable(false);

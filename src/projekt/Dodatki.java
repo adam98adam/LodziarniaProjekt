@@ -1,31 +1,31 @@
 package projekt;
 
 public class Dodatki {
-    private  int id;
-    private String nazwa;
-    private float cena;
+    private static   int id;
+    private static String nazwa;
+    private static float cena;
 
-    public int getId() {
+    public static int getId() {
         return id;
     }
 
-    public void setId(int id1) {
+    public static void setId(int id1) {
         id = id1;
     }
 
-    public String getNazwa() {
+    public static String getNazwa() {
         return nazwa;
     }
 
-    public void setNazwa(String nazwa1) {
+    public static void setNazwa(String nazwa1) {
         nazwa = nazwa1;
     }
 
-    public float getCena() {
+    public static float getCena() {
         return cena;
     }
 
-    public void setCena(float cena1) {
+    public static void setCena(float cena1) {
         cena = cena1;
     }
 

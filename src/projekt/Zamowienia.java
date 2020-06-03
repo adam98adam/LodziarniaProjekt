@@ -1,38 +1,38 @@
 package projekt;
 
 public class Zamowienia {
-    private int id,idOsoba;
-    private String data_zamowienia,data_dostarczenia;
+    private static int id,idOsoba;
+    private static String data_zamowienia,data_dostarczenia;
 
-    public int getId() {
+    public static int getId() {
         return id;
     }
 
-    public void setId(int id1) {
+    public static void setId(int id1) {
         id = id1;
     }
 
-    public int getIdOsoba() {
+    public static int getIdOsoba() {
         return idOsoba;
     }
 
-    private void setIdOsoba(int idOsoba1) {
+    private static void setIdOsoba(int idOsoba1) {
         idOsoba = idOsoba1;
     }
 
-    private String getData_zamowienia() {
+    private static String getData_zamowienia() {
         return data_zamowienia;
     }
 
-    private void setData_zamowienia(String data_zamowienia1) {
+    private static void setData_zamowienia(String data_zamowienia1) {
         data_zamowienia = data_zamowienia1;
     }
 
-    private String getData_dostarczenia() {
+    private static  String getData_dostarczenia() {
         return  data_dostarczenia;
     }
 
-    private void setData_dostarczenia(String data_dostarczenia1) {
+    private static void setData_dostarczenia(String data_dostarczenia1) {
         data_dostarczenia = data_dostarczenia1;
     }
 }
