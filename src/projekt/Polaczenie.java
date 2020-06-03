@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class Polaczenie {
 
     static private Connection polacz=null;
-    static private String baza = "baza", login ="sa", haslo = "Rakieta19";
+    static private String baza = "", login ="", haslo = "";
 
     static public Connection getPolacz() {
         return polacz;
@@ -46,7 +46,7 @@ public class Polaczenie {
     static public void polaczSie() {
         JFrame dialog;
         try{
-            polacz = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;" +
+            polacz = DriverManager.getConnection("" +
                     "databaseName=" + baza  + ";" +
                     "user=" + login +
                     ";password=" + haslo + ";");

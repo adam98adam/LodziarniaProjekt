@@ -57,32 +57,34 @@ public class Logowanie extends JDialog implements MenuListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object zrodlo = e.getSource();
-        if(zrodlo == zaloguj) {
+        if (zrodlo == zaloguj) {
             Uzytkownicy.setKonto(textkonto.getText());
             Uzytkownicy.setHaslo(texthaslo.getText());
-            if(Uzytkownicy.getKonto().length() <= 4 || Uzytkownicy.getKonto().length() > 20 || Uzytkownicy.getHaslo().length() <= 4 || Uzytkownicy.getHaslo().length() > 20){
+            if (Uzytkownicy.getKonto().length() <= 4 || Uzytkownicy.getKonto().length() > 20 || Uzytkownicy.getHaslo().length() <= 4 || Uzytkownicy.getHaslo().length() > 20) {
                 komunikat = new JFrame();
-                JOptionPane.showMessageDialog(komunikat,"Login lub haslo nie spelniaja kryteriow :("+"\nWskazowka : Login i haslo musi zawierac wiecej niz 4 znaki i max 20","Komunikat",JOptionPane.WARNING_MESSAGE);
-            }
-            else {
+                JOptionPane.showMessageDialog(komunikat, "Login lub haslo nie spelniaja kryteriow :(" + "\nWskazowka : Login i haslo musi zawierac wiecej niz 4 znaki i max 20", "Komunikat", JOptionPane.WARNING_MESSAGE);
+            } else {
                 try {
                     Statement stmt = Polaczenie.getPolacz().createStatement();
-                    String sql = "SELECT CASE WHEN Administrator = 0 THEN 'False' ELSE 'True' END AS Administrator FROM Uzytkownicy WHERE Konto = '" + Uzytkownicy.getKonto() + "' AND Haslo = '" + Uzytkownicy.getHaslo() + "'";
-                    ResultSet rs = stmt.executeQuery(sql);
+                    ResultSet rs = Uzytkownicy.sprawdzUzytkownika(stmt);
                     int rowCount = 0;
-                    while(rs.next()) {
+                    while (rs.next()) {
                         Uzytkownicy.setAdministrator(Boolean.parseBoolean(rs.getString("Administrator")));
                         rowCount++;
                     }
-                    if(rowCount != 0) {
-                        if (Uzytkownicy.getAdministrator())
-                            System.out.println("Admin");
-                        else
-                            System.out.println("Klient");
-                    }
-                    else {
+                    if (rowCount != 0) {
+                        if (Uzytkownicy.getAdministrator()) {
+                            Uzytkownicy.ustawUzytkownika(stmt);
+                            System.out.println("Id : " + Uzytkownicy.getId() + " Konto : " + Uzytkownicy.getKonto() + " Haslo : " + Uzytkownicy.getHaslo() + " Adminitrator : " + Uzytkownicy.getAdministrator());
+                        } else {
+                            Uzytkownicy.ustawUzytkownika(stmt);
+                            System.out.println("Id : " + Uzytkownicy.getId() + " Konto : " + Uzytkownicy.getKonto() + " Haslo : " + Uzytkownicy.getHaslo() + " Adminitrator : " + Uzytkownicy.getAdministrator());
+                        }
+
+                    } else {
                         System.out.println("Nie ma tekigo uzytkownika");
                     }
+
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
@@ -90,12 +92,7 @@ public class Logowanie extends JDialog implements MenuListener, ActionListener {
 
 
             }
-
-
-
         }
-
-
     }
 
     @Override
