@@ -1,5 +1,9 @@
 package projekt;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Osoby {
     private static  int id,idUzytkownicy;
     private static String imie,nazwisko;
@@ -53,6 +57,19 @@ public class Osoby {
 
     public static void setTelefon(char[] telefon1) {
         telefon = telefon1;
+    }
+
+    public static void ustawOsobe(Statement stmt) throws SQLException {
+            String sql = "SELECT O.idOsoby,O.imie,O.nazwisko,O.pesel,O.telefon FROM Osoby O WHERE O.idUzytkownicy = " + Uzytkownicy.getId();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                id = rs.getInt("idOsoby");
+                imie = rs.getString("imie");
+                nazwisko = rs.getString("nazwisko");
+                pesel = rs.getString("pesel").toCharArray();
+                telefon = rs.getString("telefon").toCharArray();
+            }
+
     }
 
 }
