@@ -57,6 +57,30 @@ public class Uzytkownicy  {
         }
     }
 
+    public static boolean sprawdzKonto(String s) throws SQLException {
+        String a = "";
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String sql = "SELECT konto FROM Uzytkownicy WHERE konto = '" + s + "'";
+        ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()) {
+            a = rs.getString("konto");
+        }
+
+        if(a.equals(getKonto()))
+            return false;
+        else
+            return true;
+
+    }
+
+    public static void zmienUzytkownika(String k,String h) throws SQLException {
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String sql = "UPDATE Uzytkownicy SET konto = '" + k + "',haslo = '" + h + "' WHERE konto = '" + getKonto() + "'";
+        stmt.executeUpdate(sql);
+        setKonto(k);
+        setHaslo(h);
+    }
+
 
 
 }

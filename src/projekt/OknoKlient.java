@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -130,8 +131,25 @@ public class OknoKlient implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 String login = tlogin.getText();
                 String haslo = thaslo.getText();
-                
-               if(login.length() <=4 || login.length() > 20 || haslo.length() <= 4 || haslo.length() > 20)
+
+                if (login.length() <= 4 || login.length() > 20 || haslo.length() <= 4 || haslo.length() > 20)
+                    Komunikaty.kryteriaUzytkownik();
+                else {
+                    try {
+                        if(Uzytkownicy.sprawdzKonto(login)){
+                            Komunikaty.istniejeUzytkownik();
+                        }
+                        else {
+                            Uzytkownicy.zmienUzytkownika(login,haslo);
+                            uzytkownik.dispose();
+                        }
+
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+
+
 
             }
         });

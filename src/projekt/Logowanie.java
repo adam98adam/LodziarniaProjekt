@@ -17,7 +17,7 @@ public class Logowanie extends JDialog implements MenuListener, ActionListener {
     private JButton zaloguj;
     private JMenuBar mb;
     private JMenu menu;
-    private JFrame komunikat;
+
 
     public JTextField getTextkonto() {
         return  textkonto;
@@ -61,8 +61,7 @@ public class Logowanie extends JDialog implements MenuListener, ActionListener {
             Uzytkownicy.setKonto(textkonto.getText());
             Uzytkownicy.setHaslo(texthaslo.getText());
             if (Uzytkownicy.getKonto().length() <= 4 || Uzytkownicy.getKonto().length() > 20 || Uzytkownicy.getHaslo().length() <= 4 || Uzytkownicy.getHaslo().length() > 20) {
-                komunikat = new JFrame();
-                JOptionPane.showMessageDialog(komunikat, "Login lub haslo nie spelniaja kryteriow :(" + "\nWskazowka : Login i haslo musi zawierac wiecej niz 4 znaki i max 20", "Komunikat", JOptionPane.WARNING_MESSAGE);
+                Komunikaty.kryteriaUzytkownik();
             } else {
                 try {
                     Statement stmt = Polaczenie.getPolacz().createStatement();

@@ -45,19 +45,17 @@ public class Polaczenie {
     }
 
     public static void polaczSie() {
-        JFrame dialog;
         try{
             polacz = DriverManager.getConnection("" +
                     "databaseName=" + baza  + ";" +
                     "user=" + login +
                     ";password=" + haslo + ";");
 
-            //dialog = new JFrame();
-            //JOptionPane.showMessageDialog(dialog,"Polaczono z baza danych");
+
 
         } catch (SQLException throwables) {
-            //dialog = new JFrame();
-            //JOptionPane.showMessageDialog(dialog,"Brak polaczenia z baza danych","Blad",JOptionPane.ERROR_MESSAGE);
+            Komunikaty.bladPolaczenia();
+
         }
     }
 
