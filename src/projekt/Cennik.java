@@ -1,5 +1,8 @@
 package projekt;
 
+import javax.swing.*;
+import java.sql.*;
+
 public class Cennik {
     private static int id;
     private static float pojemnosc_ml,cena;
@@ -27,4 +30,14 @@ public class Cennik {
     public static void setCena(float cena1) {
         cena = cena1;
     }
+
+    public static void pobierzPojemnosci(JComboBox j) throws SQLException {
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String s = "SELECT pojemnosc_ml FROM Cennik";
+        ResultSet rs = stmt.executeQuery(s);
+        while (rs.next()){
+            j.addItem(rs.getString("pojemnosc_ml"));
+        }
+    }
 }
+

@@ -1,19 +1,30 @@
 package projekt;
 
+import javafx.scene.control.CheckBox;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class OknoKlient implements ActionListener {
     static private JFrame okno;
-    static private JLabel witaj,data,godzina;
-    static private JButton uzytkownik,osoba,usun;
+    static private JTable table;
+    static private JLabel witaj,data,godzina,zamowienia;
+    static private JButton uzytkownik,osoba,usun,zamow;
+    static private JScrollPane sp;
+    //pobieranie wybranych kolumn do jedenj listy; wszystkie atrybuty przyjmuje jako String
+    static public java.util.List<String[]> lista = new ArrayList<String[]>();
 
-    static public void utworzOkno() {
+
+    static public void utworzOkno() throws SQLException {
 
         witaj = new JLabel("");
         witaj.setBounds(180,10,200,30);
@@ -30,6 +41,12 @@ public class OknoKlient implements ActionListener {
         godzina.setFont(new Font("Serif", Font.BOLD, 25));
         godzina.setForeground(Color.GREEN);
         dodajPrzyciski();
+        zamowienia = new JLabel();
+        zamowienia.setText("Moje Zamowienia :");
+        zamowienia.setBounds(50,230,250,30);
+        zamowienia.setFont(new Font("Serif", Font.BOLD, 25));
+        zamowienia.setForeground(Color.GREEN);
+        tabela();
         okno = new JFrame("Klient");
         okno.setVisible(true);
         okno.setSize(500,500);
@@ -43,9 +60,12 @@ public class OknoKlient implements ActionListener {
         okno.add(witaj);
         okno.add(data);
         okno.add(godzina);
+        okno.add(zamowienia);
         okno.add(uzytkownik);
         okno.add(osoba);
         okno.add(usun);
+        okno.add(zamow);
+        okno.add(sp);
 
     }
 
@@ -70,9 +90,11 @@ public class OknoKlient implements ActionListener {
         uzytkownik = new JButton("Uzytkownik");
         osoba = new JButton("Dane");
         usun = new JButton("Usun Konto");
+        zamow = new JButton("Zamow");
         uzytkownik.setBounds(50,150,100,20);
         osoba.setBounds(200,150,100,20);
         usun.setBounds(350,150,100,20);
+        zamow.setBounds(370,280,100,20);
         uzytkownik.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,7 +114,45 @@ public class OknoKlient implements ActionListener {
 
             }
         });
+        zamow.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    oknoZamow();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
 
+
+    }
+
+    public static void tabela() throws SQLException {
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String idZamowienia = "SELECT idZamowienia FROM Zamowienia WHERE idOsoba = " + Osoby.getId();
+        String sql = "SELECT smak,pojemnosc_mL,cena FROM ((Lacznik L INNER JOIN Cennik C ON L.idCennik = C.idCennik) INNER JOIN Lody Lo ON L.idLody = Lo.idLody) WHERE L.idZamowienia IN (" + idZamowienia + ")";
+        stmt.executeQuery(sql);
+        ResultSet rs = stmt.executeQuery(sql);
+        ResultSetMetaData wynik = rs.getMetaData();
+        int ile_kolumn = wynik.getColumnCount();
+        //pobranie wybranych kolumn do jednej listy
+        while (rs.next()) {
+            String[] t = {rs.getString("smak"), rs.getString("pojemnosc_mL"), rs.getString("cena")};
+            lista.add(t);
+        }
+
+        //konwersja listy do tablicy na potrzeby JTable
+        String array[][]=new String[lista.size()][];
+        for (int i=0;i<array.length;i++){
+            String[] row=lista.get(i);
+            array[i]=row;
+        }
+
+        String[] columns={"Smak","pojemnosc_ml","Cena"};
+        table = new JTable(array,columns);
+        sp = new JScrollPane(table);
+        sp.setBounds(30,280,300,100);
 
     }
 
@@ -292,6 +352,64 @@ public class OknoKlient implements ActionListener {
                 usun.dispose();
             }
         });
+
+    }
+
+    public static void oknoZamow() throws SQLException {
+        JComboBox smak = new JComboBox();
+        JComboBox pojemonsc = new JComboBox();
+        JLabel wybierzSmak = new JLabel("Wybierz smak:");
+        JLabel wybierzPojemnosc = new JLabel("Wybierz pojemnosc(mL):");
+        JLabel cenaLod = new JLabel("Cena:");
+        JTextField cenaPojemnosc = new JTextField("");
+
+
+
+        JTextField tcenaLod= new  JTextField("");
+        JButton zatwierdz = new JButton("Zatwierdz");
+        wybierzSmak.setBounds(20,50,100,20);
+        smak.setBounds(110,50,100,20);
+        wybierzPojemnosc.setBounds(240,50,160,20);
+        pojemonsc.setBounds(390,50,100,20);
+        cenaLod.setBounds(520,50,100,20);
+        cenaPojemnosc.setBounds(600,50,100,20);
+        Lody.pobierzSmaki(smak);
+        Cennik.pobierzPojemnosci(pojemonsc);
+
+        JDialog zamowienie = new JDialog();
+        zamowienie.setSize(800,400);
+        int szer_okna = zamowienie.getSize().width;
+        int wys_okna = zamowienie.getSize().height;
+        zamowienie.setLocation((Wymiary.getSzer() - szer_okna) / 2, (Wymiary.getWys() - wys_okna) / 2);
+        zamowienie.setVisible(true);
+        zamowienie.setLayout(null);
+        zamowienie.add(smak);
+        zamowienie.add(wybierzSmak);
+        zamowienie.add(pojemonsc);
+        zamowienie.add(wybierzPojemnosc);
+        zamowienie.add(cenaLod);
+        zamowienie.add(cenaPojemnosc);
+        zamowienie.setTitle("Zamowienie");
+
+        pojemonsc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Statement stmt = Polaczenie.getPolacz().createStatement();
+                    String p = (String) pojemonsc.getSelectedItem();
+                    String sql = "SELECT cena FROM Cennik WHERE pojemnosc_mL = " + p;
+                    ResultSet rs = stmt.executeQuery(sql);
+                    while(rs.next()){
+                        cenaPojemnosc.setText(rs.getString("cena"));
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+
+            }
+        });
+
+
 
     }
 
