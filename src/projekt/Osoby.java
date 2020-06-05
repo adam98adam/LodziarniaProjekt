@@ -104,4 +104,10 @@ public class Osoby {
 
     }
 
+    public static void usunOsobeKlient() throws SQLException {
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String usun = "DELETE FROM Osoby WHERE idOsoby = " + Osoby.getId();
+        stmt.executeUpdate(usun);
+    }
+
 }

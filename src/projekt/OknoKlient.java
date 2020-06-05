@@ -88,6 +88,7 @@ public class OknoKlient implements ActionListener {
         usun.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                oknoUsun();
 
             }
         });
@@ -242,6 +243,56 @@ public class OknoKlient implements ActionListener {
                 ttelefon.setText(String.valueOf(Osoby.getTelefon()));
             }
         });
+    }
+
+    public static void oknoUsun(){
+        JLabel tekst = new JLabel();
+        tekst.setText("Czy na pewno chcesz usunac konto ?");
+        JButton tak = new JButton("Tak");
+        JButton nie = new JButton("Nie");
+        tekst.setForeground(Color.RED);
+        tekst.setFont(new Font("Serif", Font.BOLD, 25));
+        tekst.setBounds(50,20,400,100);
+        tak.setBounds(50,120,150,20);
+        nie.setBounds(290,120,150,20);
+
+
+        JDialog usun = new JDialog();
+        usun.setSize(500,200);
+        int szer_okna = usun.getSize().width;
+        int wys_okna = usun.getSize().height;
+        usun.setLocation((Wymiary.getSzer() - szer_okna) / 2, (Wymiary.getWys() - wys_okna) / 2);
+        usun.setLayout(null);
+        usun.setResizable(false);
+        usun.setVisible(true);
+        usun.add(tekst);
+        usun.add(tak);
+        usun.add(nie);
+
+        tak.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    DodatkiZamowienia.usunDodatkiLacznikKlient();
+                    NapojeZamowienia.usunNapojeZamowieniaKlient();
+                    Lacznik.usunZamowieniaLacznikKlient();
+                    Zamowienia.usunZamowieniaKlient();
+                    Osoby.usunOsobeKlient();
+                    Uzytkownicy.usunUzytkownikaKlient();
+                    System.exit(0);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
+
+        nie.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                usun.dispose();
+            }
+        });
+
     }
 
 

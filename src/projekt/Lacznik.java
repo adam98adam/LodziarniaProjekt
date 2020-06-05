@@ -1,5 +1,8 @@
 package projekt;
 
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Lacznik {
     private static int id,idZamowienia,idCennik,idLody;
 
@@ -33,5 +36,12 @@ public class Lacznik {
 
     public static void setIdLody(int idLody1) {
         idLody = idLody1;
+    }
+
+    public static void usunZamowieniaLacznikKlient() throws SQLException {
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String idZamowienia = "SELECT idZamowienia FROM Zamowienia WHERE idOsoba = " + Osoby.getId();
+        String usun = "DELETE FROM Lacznik WHERE idZamowienia IN (" + idZamowienia + ")";
+        stmt.executeUpdate(usun);
     }
 }

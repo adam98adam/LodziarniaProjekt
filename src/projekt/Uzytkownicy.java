@@ -81,6 +81,12 @@ public class Uzytkownicy  {
         setHaslo(h);
     }
 
+    public static void usunUzytkownikaKlient() throws SQLException {
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String usun = "DELETE FROM Uzytkownicy WHERE idUzytkownicy = " + getId();
+        stmt.executeUpdate(usun);
+    }
+
 
 
 }

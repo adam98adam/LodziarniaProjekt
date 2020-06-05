@@ -46,7 +46,7 @@ public class Polaczenie {
 
     public static void polaczSie() {
         try{
-            polacz = DriverManager.getConnection("" +
+            polacz = DriverManager.getConnection(";" +
                     "databaseName=" + baza  + ";" +
                     "user=" + login +
                     ";password=" + haslo + ";");

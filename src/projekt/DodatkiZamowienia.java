@@ -3,8 +3,8 @@ package projekt;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class NapojeZamowienia {
-    private static  int idZamowienia,idNapoje;
+public class DodatkiZamowienia {
+    private static  int idZamowienia,idDodatki;
 
     public static int getIdZamowienia() {
         return idZamowienia;
@@ -14,19 +14,18 @@ public class NapojeZamowienia {
         idZamowienia = idZamowienia1;
     }
 
-    public static int getIdNapoje() {
-        return idNapoje;
+    public static int getIdDodatki() {
+        return idDodatki;
     }
 
-    public static void setIdNapoje(int idNapoje1) {
-        idNapoje = idNapoje1;
+    public static void setIdDodatki(int idDodatki1) {
+        idDodatki = idDodatki1;
     }
 
-    public static void usunNapojeZamowieniaKlient() throws SQLException {
+    public static void usunDodatkiLacznikKlient() throws SQLException {
         Statement stmt = Polaczenie.getPolacz().createStatement();
         String idZamowienia = "SELECT idZamowienia FROM Zamowienia WHERE idOsoba = " + Osoby.getId();
-        String usun = "DELETE FROM NapojeZamowienia WHERE idZamowienia IN (" + idZamowienia + ")";
+        String usun = "DELETE FROM DodatkiZamowienia WHERE idZamowienia IN (" + idZamowienia + ")";
         stmt.executeUpdate(usun);
     }
-
 }
