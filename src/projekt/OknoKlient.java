@@ -167,8 +167,85 @@ public class OknoKlient implements ActionListener {
     }
 
     public static void oknoOsoby() {
+        JLabel imie = new JLabel("Imie : ");
+        JLabel nazwisko = new JLabel("Nazwisko : ");
+        JLabel pesel = new JLabel("Pesel : ");
+        JLabel telefon = new JLabel("Telefon : ");
+        JTextField timie = new JTextField(Osoby.getImie());
+        JTextField tnazwisko = new JTextField(Osoby.getNazwisko());
+        JTextField tpesel = new JTextField(String.valueOf(Osoby.getPesel()));
+        JTextField ttelefon = new JTextField(String.valueOf(Osoby.getTelefon()));
+        JButton zatwierdz = new JButton("Zatwierdz");
+        JButton przywroc = new JButton("Przywroc");
+        imie.setBounds(20, 10, 100, 50);
+        nazwisko.setBounds(20, 50, 100, 50);
+        pesel.setBounds(20, 90, 100, 50);
+        telefon.setBounds(20, 130, 100, 50);
+        timie.setBounds(120, 25, 100, 20);
+        tnazwisko.setBounds(120, 65, 100, 20);
+        tpesel.setBounds(120, 105, 100, 20);
+        ttelefon.setBounds(120, 145, 100, 20);
+        zatwierdz.setBounds(50, 200, 100, 20);
+        przywroc.setBounds(160, 200, 100, 20);
+        JDialog osoba = new JDialog();
+        osoba.setTitle("Osoba");
+        osoba.setSize(300, 300);
+        int szer_okna = osoba.getSize().width;
+        int wys_okna = osoba.getSize().height;
+        osoba.setLocation((Wymiary.getSzer() - szer_okna) / 2, (Wymiary.getWys() - wys_okna) / 2);
+        osoba.setResizable(false);
+        osoba.setVisible(true);
+        osoba.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        osoba.add(imie);
+        osoba.add(nazwisko);
+        osoba.add(pesel);
+        osoba.add(telefon);
+        osoba.add(timie);
+        osoba.add(tnazwisko);
+        osoba.add(tpesel);
+        osoba.add(ttelefon);
+        osoba.add(zatwierdz);
+        osoba.add(przywroc);
 
+        zatwierdz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String imie = timie.getText();
+                String nazwisko = tnazwisko.getText();
+                String pesel = tpesel.getText();
+                String telefon = ttelefon.getText();
+
+                if (imie.length() <= 2 || imie.length() > 20 || nazwisko.length() <= 2 || pesel.length() != 11 || telefon.length() != 9)
+                    Komunikaty.kryteriaOsoba();
+                else {
+                    try {
+                        if (Osoby.sprawdzPeselTelefon(pesel, telefon)) {
+                            Osoby.zmienOsobe(imie, nazwisko, pesel, telefon);
+                            witaj.setText("Witaj : " + Osoby.getImie());
+                            osoba.dispose();
+                        } else
+                            Komunikaty.istniejeOsoba();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
+        przywroc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                timie.setText(Osoby.getImie());
+                tnazwisko.setText(Osoby.getNazwisko());
+                tpesel.setText(String.valueOf(Osoby.getPesel()));
+                ttelefon.setText(String.valueOf(Osoby.getTelefon()));
+            }
+        });
     }
+
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -72,4 +72,36 @@ public class Osoby {
 
     }
 
+    public static boolean sprawdzPeselTelefon(String p,String t) throws SQLException {
+        int liczba = 0;
+
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String sql = "SELECT COUNT (*) AS 'Liczba' FROM Osoby WHERE pesel = '" + p + "' OR telefon = '" + t + "'";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()) {
+            liczba = rs.getInt("Liczba");
+        }
+
+        if((liczba == 0) || (p.equals(String.valueOf(getPesel())) && t.equals(String.valueOf(getTelefon()))))
+            return true;
+        else
+            return  false;
+
+    }
+
+    public static void zmienOsobe(String i,String n,String p,String t) throws SQLException {
+        String imie = i;
+        String nazwisko = n;
+        String pesel = p;
+        String telefon = t;
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String sql = "UPDATE Osoby SET imie = '" + imie + "',nazwisko = '" + nazwisko + "',pesel = '" + pesel + "',telefon = '" + telefon + "' WHERE pesel = '" + String.valueOf(getPesel()) + "'";
+        stmt.executeUpdate(sql);
+        setImie(imie);
+        setNazwisko(nazwisko);
+        setPesel(pesel.toCharArray());
+        setTelefon(telefon.toCharArray());
+
+    }
+
 }
