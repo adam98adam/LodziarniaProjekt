@@ -48,4 +48,22 @@ public class Zamowienia {
         String sql = "DELETE FROM Zamowienia WHERE  idOsoba = " + Osoby.getId();
         stmt.executeUpdate(sql);
     }
+
+    public static void zamowieniaKlient() throws SQLException {
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String sql = "INSERT INTO Zamowienia VALUES (" + Osoby.getId()  + ",NULL,NULL)";
+        stmt.executeUpdate(sql);
+        sql = "SELECT MAX(idZamowienia) AS MaxId FROM Zamowienia";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()) {
+            Zamowienia.setId(rs.getInt("MaxId"));
+        }
+
+    }
+
+    public static void ustawDatyKlient() throws SQLException {
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+
+    }
+
 }

@@ -59,17 +59,41 @@ public class Uzytkownicy  {
 
     public static boolean sprawdzKonto(String s) throws SQLException {
         String a = "";
+        int liczba = 0 ;
         Statement stmt = Polaczenie.getPolacz().createStatement();
         String sql = "SELECT konto FROM Uzytkownicy WHERE konto = '" + s + "'";
         ResultSet rs = stmt.executeQuery(sql);
         while (rs.next()) {
             a = rs.getString("konto");
         }
+        sql = "SELECT COUNT(*) AS Liczba FROM Uzytkownicy WHERE konto = '" + s + "'";
+        rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            liczba = rs.getInt("Liczba");
+        }
 
-        if(a.equals(getKonto()))
+        if(a.equals(getKonto()) || liczba == 0)
             return false;
         else
             return true;
+
+    }
+
+    public static boolean sprawdzKontoAdministrator(String s) throws SQLException {
+        int liczba = 0 ;
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String sql = "SELECT COUNT(*) AS Liczba FROM Uzytkownicy WHERE konto = '" + s + "'";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            liczba = rs.getInt("Liczba");
+        }
+        if(liczba == 0)
+            return false;
+        else
+            return true;
+
+
+
 
     }
 
@@ -87,7 +111,22 @@ public class Uzytkownicy  {
         stmt.executeUpdate(usun);
     }
 
+    public static void nowyUzytkownik(String login,String haslo,int admin) throws SQLException {
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String sql = "INSERT INTO Uzytkownicy VALUES ('" + login + "','" + haslo + "'," + admin + ")";
+        stmt.executeUpdate(sql);
+    }
 
+    public static int maxId() throws SQLException {
+        int id=0;
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String sql = "SELECT MAX(idUzytkownicy) AS Max FROM Uzytkownicy";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()) {
+            id = rs.getInt("Max");
+        }
+        return  id;
+    }
 
 }
 

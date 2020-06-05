@@ -74,13 +74,13 @@ public class Logowanie extends JDialog implements MenuListener, ActionListener {
                     if (rowCount != 0) {
                         if (Uzytkownicy.getAdministrator()) {
                             Uzytkownicy.ustawUzytkownika(stmt);
-                            System.out.println("Id : " + Uzytkownicy.getId() + " Konto : " + Uzytkownicy.getKonto() + " Haslo : " + Uzytkownicy.getHaslo() + " Adminitrator : " + Uzytkownicy.getAdministrator());
-                        } else {
-                            Uzytkownicy.ustawUzytkownika(stmt);
-                            System.out.println("Id : " + Uzytkownicy.getId() + " Konto : " + Uzytkownicy.getKonto() + " Haslo : " + Uzytkownicy.getHaslo() + " Adminitrator : " + Uzytkownicy.getAdministrator());
                             dispose();
                             Osoby.ustawOsobe(stmt);
-                            System.out.println(Osoby.getImie());
+                            OknoAdministrator.utworzOkno();
+                        } else {
+                            Uzytkownicy.ustawUzytkownika(stmt);
+                            dispose();
+                            Osoby.ustawOsobe(stmt);
                             OknoKlient.utworzOkno();
                         }
 

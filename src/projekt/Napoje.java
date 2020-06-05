@@ -49,5 +49,6 @@ public class Napoje {
         while(rs.next()) {
             j.addItem(rs.getString("nazwa"));
         }
+        j.addItem("Brak");
     }
 }

@@ -89,6 +89,30 @@ public class Osoby {
 
     }
 
+    public static boolean sprawdzPeselTelefonAdministrator(String p,String t) throws SQLException {
+        int liczba = 0;
+
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String sql = "SELECT COUNT (*) AS 'Liczba' FROM Osoby WHERE pesel = '" + p + "' OR telefon = '" + t + "'";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()) {
+            liczba = rs.getInt("Liczba");
+        }
+
+        if((liczba == 0))
+            return true;
+        else
+            return  false;
+
+    }
+
+    public static void nowaOsoba(String imie,String nazwisko,String pesel,String telefon) throws SQLException {
+        int maxId=Uzytkownicy.maxId();
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String sql = "INSERT INTO Osoby VALUES (" + maxId + ",'" + imie + "','" + nazwisko + "','" + pesel + "','" + telefon + "')";
+        stmt.executeUpdate(sql);
+    }
+
     public static void zmienOsobe(String i,String n,String p,String t) throws SQLException {
         String imie = i;
         String nazwisko = n;

@@ -17,8 +17,8 @@ import java.util.Date;
 public class OknoKlient implements ActionListener {
     static private JFrame okno;
     static private JTable table;
-    static private JLabel witaj,data,godzina,zamowienia;
-    static private JButton uzytkownik,osoba,usun,zamow;
+    static private JLabel witaj, data, godzina, zamowienia;
+    static private JButton uzytkownik, osoba, usun, zamow;
     static private JScrollPane sp;
     //pobieranie wybranych kolumn do jedenj listy; wszystkie atrybuty przyjmuje jako String
     static public java.util.List<String[]> lista = new ArrayList<String[]>();
@@ -27,15 +27,15 @@ public class OknoKlient implements ActionListener {
     static public void utworzOkno() throws SQLException {
 
         witaj = new JLabel("");
-        witaj.setBounds(180,10,200,30);
+        witaj.setBounds(180, 10, 200, 30);
         witaj.setText("Witaj : " + Osoby.getImie());
         witaj.setFont(new Font("Serif", Font.BOLD, 25));
         witaj.setForeground(Color.GREEN);
         data = new JLabel("Data : " + pokazDzien());
         godzina = new JLabel("");
         pokazCzas();
-        data.setBounds(160,50,200,30);
-        godzina.setBounds(130,90,300,30);
+        data.setBounds(160, 50, 200, 30);
+        godzina.setBounds(130, 90, 300, 30);
         data.setFont(new Font("Serif", Font.BOLD, 25));
         data.setForeground(Color.GREEN);
         godzina.setFont(new Font("Serif", Font.BOLD, 25));
@@ -43,16 +43,16 @@ public class OknoKlient implements ActionListener {
         dodajPrzyciski();
         zamowienia = new JLabel();
         zamowienia.setText("Moje Zamowienia :");
-        zamowienia.setBounds(50,230,250,30);
+        zamowienia.setBounds(50, 230, 250, 30);
         zamowienia.setFont(new Font("Serif", Font.BOLD, 25));
         zamowienia.setForeground(Color.GREEN);
         tabela();
         okno = new JFrame("Klient");
         okno.setVisible(true);
-        okno.setSize(500,500);
-        int szer_okna=okno.getSize().width;
-        int wys_okna=okno.getSize().height;
-        okno.setLocation((Wymiary.getSzer()-szer_okna)/2,(Wymiary.getWys()-wys_okna)/2);
+        okno.setSize(500, 500);
+        int szer_okna = okno.getSize().width;
+        int wys_okna = okno.getSize().height;
+        okno.setLocation((Wymiary.getSzer() - szer_okna) / 2, (Wymiary.getWys() - wys_okna) / 2);
         okno.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         okno.getContentPane().setBackground(Color.black);
         okno.setLayout(null);
@@ -86,19 +86,19 @@ public class OknoKlient implements ActionListener {
         }).start();
     }
 
-    public static void  dodajPrzyciski() {
+    public static void dodajPrzyciski() {
         uzytkownik = new JButton("Uzytkownik");
         osoba = new JButton("Dane");
         usun = new JButton("Usun Konto");
         zamow = new JButton("Zamow");
-        uzytkownik.setBounds(50,150,100,20);
-        osoba.setBounds(200,150,100,20);
-        usun.setBounds(350,150,100,20);
-        zamow.setBounds(370,280,100,20);
+        uzytkownik.setBounds(50, 150, 100, 20);
+        osoba.setBounds(200, 150, 100, 20);
+        usun.setBounds(350, 150, 100, 20);
+        zamow.setBounds(370, 280, 100, 20);
         uzytkownik.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-             oknoUzytkownika();
+                oknoUzytkownika();
             }
         });
         osoba.addActionListener(new ActionListener() {
@@ -118,6 +118,7 @@ public class OknoKlient implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    Zamowienia.zamowieniaKlient();
                     oknoZamow();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
@@ -143,16 +144,16 @@ public class OknoKlient implements ActionListener {
         }
 
         //konwersja listy do tablicy na potrzeby JTable
-        String array[][]=new String[lista.size()][];
-        for (int i=0;i<array.length;i++){
-            String[] row=lista.get(i);
-            array[i]=row;
+        String array[][] = new String[lista.size()][];
+        for (int i = 0; i < array.length; i++) {
+            String[] row = lista.get(i);
+            array[i] = row;
         }
 
-        String[] columns={"Smak","pojemnosc_ml","Cena"};
-        table = new JTable(array,columns);
+        String[] columns = {"Smak", "pojemnosc_ml", "Cena"};
+        table = new JTable(array, columns);
         sp = new JScrollPane(table);
-        sp.setBounds(30,280,300,100);
+        sp.setBounds(30, 280, 300, 100);
 
     }
 
@@ -165,18 +166,18 @@ public class OknoKlient implements ActionListener {
         JTextField thaslo = new JTextField(Uzytkownicy.getHaslo());
         JButton zatwierdz = new JButton("Zatwierdz");
         JButton przywroc = new JButton("Przywroc");
-        login.setBounds(20,50,100,50);
-        haslo.setBounds(20,120,100,50);
-        tlogin.setBounds(100,65,150,20);
-        thaslo.setBounds(100,135,150,20);
-        zatwierdz.setBounds(50,200,100,20);
-        przywroc.setBounds(160,200,100,20);
+        login.setBounds(20, 50, 100, 50);
+        haslo.setBounds(20, 120, 100, 50);
+        tlogin.setBounds(100, 65, 150, 20);
+        thaslo.setBounds(100, 135, 150, 20);
+        zatwierdz.setBounds(50, 200, 100, 20);
+        przywroc.setBounds(160, 200, 100, 20);
         JDialog uzytkownik = new JDialog();
         uzytkownik.setTitle("Uzytkownik");
-        uzytkownik.setSize(300,300);
-        int szer_okna=uzytkownik.getSize().width;
-        int wys_okna=uzytkownik.getSize().height;
-        uzytkownik.setLocation((Wymiary.getSzer()-szer_okna)/2,(Wymiary.getWys()-wys_okna)/2);
+        uzytkownik.setSize(300, 300);
+        int szer_okna = uzytkownik.getSize().width;
+        int wys_okna = uzytkownik.getSize().height;
+        uzytkownik.setLocation((Wymiary.getSzer() - szer_okna) / 2, (Wymiary.getWys() - wys_okna) / 2);
         uzytkownik.setResizable(false);
         uzytkownik.setVisible(true);
         uzytkownik.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -197,11 +198,10 @@ public class OknoKlient implements ActionListener {
                     Komunikaty.kryteriaUzytkownik();
                 else {
                     try {
-                        if(Uzytkownicy.sprawdzKonto(login)){
+                        if (Uzytkownicy.sprawdzKonto(login)) {
                             Komunikaty.istniejeUzytkownik();
-                        }
-                        else {
-                            Uzytkownicy.zmienUzytkownika(login,haslo);
+                        } else {
+                            Uzytkownicy.zmienUzytkownika(login, haslo);
                             uzytkownik.dispose();
                         }
 
@@ -209,7 +209,6 @@ public class OknoKlient implements ActionListener {
                         throwables.printStackTrace();
                     }
                 }
-
 
 
             }
@@ -222,7 +221,6 @@ public class OknoKlient implements ActionListener {
                 thaslo.setText(Uzytkownicy.getHaslo());
             }
         });
-
 
 
     }
@@ -305,20 +303,20 @@ public class OknoKlient implements ActionListener {
         });
     }
 
-    public static void oknoUsun(){
+    public static void oknoUsun() {
         JLabel tekst = new JLabel();
         tekst.setText("Czy na pewno chcesz usunac konto ?");
         JButton tak = new JButton("Tak");
         JButton nie = new JButton("Nie");
         tekst.setForeground(Color.RED);
         tekst.setFont(new Font("Serif", Font.BOLD, 25));
-        tekst.setBounds(50,20,400,100);
-        tak.setBounds(50,120,150,20);
-        nie.setBounds(290,120,150,20);
+        tekst.setBounds(50, 20, 400, 100);
+        tak.setBounds(50, 120, 150, 20);
+        nie.setBounds(290, 120, 150, 20);
 
 
         JDialog usun = new JDialog();
-        usun.setSize(500,200);
+        usun.setSize(500, 200);
         int szer_okna = usun.getSize().width;
         int wys_okna = usun.getSize().height;
         usun.setLocation((Wymiary.getSzer() - szer_okna) / 2, (Wymiary.getWys() - wys_okna) / 2);
@@ -363,17 +361,25 @@ public class OknoKlient implements ActionListener {
         JLabel wybierzSmak = new JLabel("Wybierz smak:");
         JLabel wybierzPojemnosc = new JLabel("Wybierz pojemnosc(mL):");
         JLabel wybierzDodatek = new JLabel("Wybierz dodatek:");
+        JLabel wybierzNapoj = new JLabel("Wybierz napoj:");
         JLabel cenaLod = new JLabel("Cena:");
         JLabel lcenadodatki = new JLabel("Cena:");
+        JLabel cenaNapoj = new JLabel("Cena:");
         JLabel lody = new JLabel("Lody:");
+        JLabel lnapoje = new JLabel("Napoje:");
         JLabel dodatkiLody = new JLabel("Dodatki:");
         JTextField cenaPojemnosc = new JTextField("");
         JTextField cenaDodatki = new JTextField("");
+        JTextField cenaNapoje = new JTextField("");
         JButton dodajLody = new JButton("Dodaj");
+        JButton dodajDodatki = new JButton("Dodaj");
+        JButton dodajNapoje = new JButton("Dodaj");
 
         lody.setFont(new Font("Serif", Font.BOLD, 25));
         lody.setForeground(Color.GREEN);
 
+        lnapoje.setFont(new Font("Serif", Font.BOLD, 25));
+        lnapoje.setForeground(Color.GREEN);
 
         dodatkiLody.setFont(new Font("Serif", Font.BOLD, 25));
         dodatkiLody.setForeground(Color.green);
@@ -382,36 +388,44 @@ public class OknoKlient implements ActionListener {
         wybierzSmak.setForeground(Color.GREEN);
         wybierzPojemnosc.setForeground(Color.GREEN);
         wybierzDodatek.setForeground(Color.GREEN);
+        wybierzNapoj.setForeground(Color.GREEN);
         cenaLod.setForeground(Color.GREEN);
         lcenadodatki.setForeground(Color.GREEN);
-
-
-
-
+        lnapoje.setForeground(Color.GREEN);
+        cenaNapoj.setForeground(Color.GREEN);
 
 
         JButton zatwierdz = new JButton("Zatwierdz");
-        lody.setBounds(20,10,100,40);
-        wybierzSmak.setBounds(20,50,100,20);
-        smak.setBounds(110,50,100,20);
-        wybierzPojemnosc.setBounds(240,50,160,20);
-        pojemonsc.setBounds(390,50,100,20);
-        cenaLod.setBounds(520,50,100,20);
-        cenaPojemnosc.setBounds(560,50,100,20);
-        dodajLody.setBounds(670,50,100,20);
-        dodatkiLody.setBounds(20,100,100,40);
-        wybierzDodatek.setBounds(20,140,100,20);
-        dodatki.setBounds(130,140,200,20);
-        lcenadodatki.setBounds(350,140,200,20);
-        cenaDodatki.setBounds(400,140,100,20);
+        lody.setBounds(20, 10, 100, 40);
+        wybierzSmak.setBounds(20, 50, 100, 20);
+        smak.setBounds(110, 50, 100, 20);
+        wybierzPojemnosc.setBounds(240, 50, 160, 20);
+        pojemonsc.setBounds(390, 50, 100, 20);
+        cenaLod.setBounds(520, 50, 100, 20);
+        cenaPojemnosc.setBounds(560, 50, 100, 20);
+        dodajLody.setBounds(670, 50, 100, 20);
+        dodatkiLody.setBounds(20, 100, 100, 40);
+        wybierzDodatek.setBounds(20, 140, 100, 20);
+        dodatki.setBounds(130, 140, 200, 20);
+        lcenadodatki.setBounds(350, 140, 200, 20);
+        cenaDodatki.setBounds(400, 140, 100, 20);
+        dodajDodatki.setBounds(510, 140, 100, 20);
+        lnapoje.setBounds(20, 200, 100, 40);
+        wybierzNapoj.setBounds(20, 240, 100, 20);
+        napoje.setBounds(110, 240, 150, 20);
+        cenaNapoj.setBounds(280, 240, 100, 20);
+        cenaNapoje.setBounds(330, 240, 100, 20);
+        dodajNapoje.setBounds(450, 240, 100, 20);
+        zatwierdz.setBounds(100, 300, 200, 20);
 
         Lody.pobierzSmaki(smak);
         Cennik.pobierzPojemnosci(pojemonsc);
         Dodatki.pobierzDodatki(dodatki);
+        Napoje.pobierzNapoje(napoje);
 
 
         JDialog zamowienie = new JDialog();
-        zamowienie.setSize(800,400);
+        zamowienie.setSize(800, 400);
         int szer_okna = zamowienie.getSize().width;
         int wys_okna = zamowienie.getSize().height;
         zamowienie.setLocation((Wymiary.getSzer() - szer_okna) / 2, (Wymiary.getWys() - wys_okna) / 2);
@@ -430,6 +444,14 @@ public class OknoKlient implements ActionListener {
         zamowienie.add(dodatki);
         zamowienie.add(lcenadodatki);
         zamowienie.add(cenaDodatki);
+        zamowienie.add(dodajDodatki);
+        zamowienie.add(lnapoje);
+        zamowienie.add(wybierzNapoj);
+        zamowienie.add(napoje);
+        zamowienie.add(cenaNapoj);
+        zamowienie.add(cenaNapoje);
+        zamowienie.add(dodajNapoje);
+        zamowienie.add(zatwierdz);
 
         zamowienie.setTitle("Zamowienie");
         zamowienie.getContentPane().setBackground(Color.black);
@@ -442,7 +464,7 @@ public class OknoKlient implements ActionListener {
                     String p = (String) pojemonsc.getSelectedItem();
                     String sql = "SELECT cena FROM Cennik WHERE pojemnosc_mL = " + p;
                     ResultSet rs = stmt.executeQuery(sql);
-                    while(rs.next()){
+                    while (rs.next()) {
                         cenaPojemnosc.setText(rs.getString("cena"));
                     }
                 } catch (SQLException throwables) {
@@ -455,26 +477,55 @@ public class OknoKlient implements ActionListener {
         dodatki.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    Statement stmt = Polaczenie.getPolacz().createStatement();
-                    String p = (String) dodatki.getSelectedItem();
-                    String sql = "SELECT cena FROM Dodatki WHERE nazwa = '" + p + "'";
-                    ResultSet rs = stmt.executeQuery(sql);
-                    while(rs.next()){
-                        cenaDodatki.setText(rs.getString("cena"));
+                String p = (String) dodatki.getSelectedItem();
+                if (!p.equals("Brak")) {
+                    try {
+                        Statement stmt = Polaczenie.getPolacz().createStatement();
+                        String sql = "SELECT cena FROM Dodatki WHERE nazwa = '" + p + "'";
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            cenaDodatki.setText(rs.getString("cena"));
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
                     }
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } else {
+                    cenaDodatki.setText("0");
+                }
+
+            }
+        });
+        napoje.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String p = (String) napoje.getSelectedItem();
+                if (!p.equals("Brak")) {
+                    try {
+                        Statement stmt = Polaczenie.getPolacz().createStatement();
+                        String sql = "SELECT cena FROM Napoje WHERE nazwa = '" + p + "'";
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            cenaNapoje.setText(rs.getString("cena"));
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                } else {
+                    cenaNapoje.setText("0");
                 }
 
             }
         });
 
+        zatwierdz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
 
     }
-
-
 
 
     @Override
