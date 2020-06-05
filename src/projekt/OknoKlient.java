@@ -358,23 +358,57 @@ public class OknoKlient implements ActionListener {
     public static void oknoZamow() throws SQLException {
         JComboBox smak = new JComboBox();
         JComboBox pojemonsc = new JComboBox();
+        JComboBox dodatki = new JComboBox();
+        JComboBox napoje = new JComboBox();
         JLabel wybierzSmak = new JLabel("Wybierz smak:");
         JLabel wybierzPojemnosc = new JLabel("Wybierz pojemnosc(mL):");
+        JLabel wybierzDodatek = new JLabel("Wybierz dodatek:");
         JLabel cenaLod = new JLabel("Cena:");
+        JLabel lcenadodatki = new JLabel("Cena:");
+        JLabel lody = new JLabel("Lody:");
+        JLabel dodatkiLody = new JLabel("Dodatki:");
         JTextField cenaPojemnosc = new JTextField("");
+        JTextField cenaDodatki = new JTextField("");
+        JButton dodajLody = new JButton("Dodaj");
+
+        lody.setFont(new Font("Serif", Font.BOLD, 25));
+        lody.setForeground(Color.GREEN);
+
+
+        dodatkiLody.setFont(new Font("Serif", Font.BOLD, 25));
+        dodatkiLody.setForeground(Color.green);
+
+
+        wybierzSmak.setForeground(Color.GREEN);
+        wybierzPojemnosc.setForeground(Color.GREEN);
+        wybierzDodatek.setForeground(Color.GREEN);
+        cenaLod.setForeground(Color.GREEN);
+        lcenadodatki.setForeground(Color.GREEN);
 
 
 
-        JTextField tcenaLod= new  JTextField("");
+
+
+
         JButton zatwierdz = new JButton("Zatwierdz");
+        lody.setBounds(20,10,100,40);
         wybierzSmak.setBounds(20,50,100,20);
         smak.setBounds(110,50,100,20);
         wybierzPojemnosc.setBounds(240,50,160,20);
         pojemonsc.setBounds(390,50,100,20);
         cenaLod.setBounds(520,50,100,20);
-        cenaPojemnosc.setBounds(600,50,100,20);
+        cenaPojemnosc.setBounds(560,50,100,20);
+        dodajLody.setBounds(670,50,100,20);
+        dodatkiLody.setBounds(20,100,100,40);
+        wybierzDodatek.setBounds(20,140,100,20);
+        dodatki.setBounds(130,140,200,20);
+        lcenadodatki.setBounds(350,140,200,20);
+        cenaDodatki.setBounds(400,140,100,20);
+
         Lody.pobierzSmaki(smak);
         Cennik.pobierzPojemnosci(pojemonsc);
+        Dodatki.pobierzDodatki(dodatki);
+
 
         JDialog zamowienie = new JDialog();
         zamowienie.setSize(800,400);
@@ -383,13 +417,22 @@ public class OknoKlient implements ActionListener {
         zamowienie.setLocation((Wymiary.getSzer() - szer_okna) / 2, (Wymiary.getWys() - wys_okna) / 2);
         zamowienie.setVisible(true);
         zamowienie.setLayout(null);
+        zamowienie.add(lody);
         zamowienie.add(smak);
         zamowienie.add(wybierzSmak);
         zamowienie.add(pojemonsc);
         zamowienie.add(wybierzPojemnosc);
         zamowienie.add(cenaLod);
         zamowienie.add(cenaPojemnosc);
+        zamowienie.add(dodajLody);
+        zamowienie.add(dodatkiLody);
+        zamowienie.add(wybierzDodatek);
+        zamowienie.add(dodatki);
+        zamowienie.add(lcenadodatki);
+        zamowienie.add(cenaDodatki);
+
         zamowienie.setTitle("Zamowienie");
+        zamowienie.getContentPane().setBackground(Color.black);
 
         pojemonsc.addActionListener(new ActionListener() {
             @Override
@@ -401,6 +444,24 @@ public class OknoKlient implements ActionListener {
                     ResultSet rs = stmt.executeQuery(sql);
                     while(rs.next()){
                         cenaPojemnosc.setText(rs.getString("cena"));
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+
+            }
+        });
+
+        dodatki.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Statement stmt = Polaczenie.getPolacz().createStatement();
+                    String p = (String) dodatki.getSelectedItem();
+                    String sql = "SELECT cena FROM Dodatki WHERE nazwa = '" + p + "'";
+                    ResultSet rs = stmt.executeQuery(sql);
+                    while(rs.next()){
+                        cenaDodatki.setText(rs.getString("cena"));
                     }
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();

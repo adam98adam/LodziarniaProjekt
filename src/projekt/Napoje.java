@@ -1,5 +1,10 @@
 package projekt;
 
+import javax.swing.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Napoje {
     private static  int id,ilosc;
     private static String nazwa;
@@ -35,5 +40,14 @@ public class Napoje {
 
     public static void setCena(float cena1) {
         cena = cena1;
+    }
+
+    public static void pobierzNapoje(JComboBox j) throws SQLException {
+        Statement stmt = Polaczenie.getPolacz().createStatement();
+        String sql = "SELECT nazwa FROM Napoje";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()) {
+            j.addItem(rs.getString("nazwa"));
+        }
     }
 }
